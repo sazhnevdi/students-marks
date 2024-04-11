@@ -1,6 +1,7 @@
 package org.sazhnevdi;
 
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.sazhnevdi.repositories.StorageService;
 import org.sazhnevdi.services.EditorMenuHandler;
 import org.sazhnevdi.services.MainMenuHandler;
@@ -12,8 +13,8 @@ import java.util.Objects;
 import java.util.Properties;
 
 final class Initializer {
-    private static final String defaultPath = "./student_marks.csv";
     private static boolean alreadyInit = false;
+
     @Getter
     private static StorageService storageService;
     @Getter
@@ -40,8 +41,11 @@ final class Initializer {
         }
 
         if (storageService == null) {
-            if (props.get("storage.path") == null) {
-                storageService = StorageService.createInstance(defaultPath);
+            var filePath = (String) props.get("storage.path");
+            if (StringUtils.isEmpty(filePath)) {
+                System.out.println("Ошибка инициализации!" +
+                        "Не указан путь к файлу с данными в файле default.properties, программа будет завершена");
+                System.exit(1);
             } else {
                 storageService = StorageService.createInstance((String) props.get("storage.path"));
             }

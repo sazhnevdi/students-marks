@@ -26,7 +26,7 @@ public class EditorMenuHandler {
 
     public void start(Scanner sc) {
         menuShower.showEditorMenuItems();
-        String choise = StringUtils.EMPTY;
+        var choise = StringUtils.EMPTY;
 
         while (!choise.equals("z")) {
             choise = sc.nextLine();
@@ -47,20 +47,7 @@ public class EditorMenuHandler {
                     menuShower.showEditorMenuItems();
                     break;
                 case "c":
-                    System.out.println("Введите имя студента:");
-                    var name = sc.nextLine().trim().toLowerCase();
-                    var marks = service.getMarkListByStudentName(name);
-                    if (CollectionUtils.isNotEmpty(marks)) {
-                        System.out.println(marks);
-                        System.out.println("Введите порядковый номер обновляемой оценки в списке:");
-                        var number = sc.nextLine().trim();
-                        System.out.println("Введите оценку:");
-                        var mark = sc.nextLine().trim();
-                        if (service.changeMarkByIndex(name, number, mark)) {
-                            System.out.println("Оценка изменена");
-                        }
-                    }
-                    menuShower.showEditorMenuItems();
+                    changeMarkByIndex(sc);
                     break;
                 case "d":
                     var data = service.getData();
@@ -80,12 +67,8 @@ public class EditorMenuHandler {
                     menuShower.showEditorMenuItems();
                     break;
                 case "f":
-                    System.out.println("Введите имя студента:");
-                    var sName = sc.nextLine().trim().toLowerCase();
-                    System.out.println("Введите оценку:");
-                    var mark = sc.nextLine().trim().toLowerCase();
-                    service.addNewMarkToStudent(sName, mark);
-                    menuShower.showEditorMenuItems();
+                    addNewMarkToStudent(sc);
+
                     break;
                 case "z":
                     menuShower.showMainMenuItems();
@@ -96,6 +79,32 @@ public class EditorMenuHandler {
             }
         }
 
+    }
+
+    private void addNewMarkToStudent(Scanner sc) {
+        System.out.println("Введите имя студента:");
+        var sName = sc.nextLine().trim().toLowerCase();
+        System.out.println("Введите оценку:");
+        var mark = sc.nextLine().trim().toLowerCase();
+        service.addNewMarkToStudent(sName, mark);
+        menuShower.showEditorMenuItems();
+    }
+
+    private void changeMarkByIndex(Scanner sc) {
+        System.out.println("Введите имя студента:");
+        var name = sc.nextLine().trim().toLowerCase();
+        var marks = service.getMarkListByStudentName(name);
+        if (CollectionUtils.isNotEmpty(marks)) {
+            System.out.println(marks);
+            System.out.println("Введите порядковый номер обновляемой оценки в списке:");
+            var number = sc.nextLine().trim();
+            System.out.println("Введите оценку:");
+            var mark = sc.nextLine().trim();
+            if (service.changeMarkByIndex(name, number, mark)) {
+                System.out.println("Оценка изменена");
+            }
+        }
+        menuShower.showEditorMenuItems();
     }
 
 }

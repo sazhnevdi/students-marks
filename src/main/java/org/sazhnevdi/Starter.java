@@ -7,10 +7,6 @@ public class Starter {
     }
 
     public static void main(String[] args) {
-        try {
-            Initializer.getMainMenuHandler().start();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        Initializer.getMainMenuHandler().start();
     }
 }
