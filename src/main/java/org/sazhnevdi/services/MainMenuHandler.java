@@ -27,7 +27,7 @@ public class MainMenuHandler {
     public void start() {
         menuShower.showMainMenuItems();
         var sc = new Scanner(System.in);
-        String choise = StringUtils.EMPTY;
+        var choise = StringUtils.EMPTY;
 
         while (!choise.equals("z")) {
             choise = sc.nextLine();
