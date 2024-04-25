@@ -34,8 +34,9 @@ public class MainMenuHandler {
 
             switch (choise) {
                 case "a":
-                    if (service.loadDataFromStorage())
+                    if (service.loadDataFromStorage()) {
                         System.out.println("Данные загружены из файла");
+                    }
                     menuShower.showMainMenuItems();
                     break;
                 case "b":
